@@ -6,18 +6,17 @@
             <button @click="addTodo">Ajouter</button>
         </div>
         <div class="todo-filter">
-            <button @click="showAllTodos">Tous</button>
-            <button @click="showActiveTodos">À faire</button>
-            <button @click="showCompletedTodos">Terminées</button>
+            <button @click="filter = 'all'">Tous</button>
+            <button @click="filter = 'active'">À faire</button>
+            <button @click="filter = 'completed'">Terminées</button>
             <button @click="clearCompletedTodos">Supprimer les tâches terminées</button>
         </div>
         <div class="todo-list">
-            <todo-component v-for="(todo, index) in filteredTodos" :key="index" :intitule="todo.intitule" :done="todo.done"
+            <todo-component v-for="(todo, index) in filteredTodos" :key="index" :todo="todo"
                 @toggleDone="toggleTodoDone(index)" @deleteTodo="deleteTodo(index)" @editTodo="editTodo" />
         </div>
-        <div class="todo-footer">
+        <div class="todo-footer" v-if="todos.length > 0">
             <span>{{ remainingTodosCount }} tâche(s) restante(s)</span>
-
         </div>
     </div>
 </template>
@@ -70,19 +69,7 @@ export default class TodosComponent extends Vue {
     }
 
     editTodo(): void {
-        1 + 1;
-    }
-
-    showAllTodos(): void {
-        this.filter = 'all';
-    }
-
-    showActiveTodos(): void {
-        this.filter = 'active';
-    }
-
-    showCompletedTodos(): void {
-        this.filter = 'completed';
+        console.log("todo: edited")
     }
 
     clearCompletedTodos(): void {
@@ -134,13 +121,14 @@ h1 {
 .todo-list {
     display: flex;
     flex-direction: column;
-}
-
-.todo-list .todo-component {
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
 }
 
 .todo-footer {
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,5 +150,6 @@ h1 {
     margin-bottom: 1rem;
     cursor: pointer;
 }
+
 </style>
   
